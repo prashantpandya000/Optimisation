@@ -39,5 +39,5 @@ for rownum, row in selected_rows.iterrows():
 
 print ("Optimization function: " + str(total_cost))
 
-st.write("**Kreirana je funkcija Cilja kako slijedi :**")
+st.write("**total cost :**")
 st.title(total_cost)

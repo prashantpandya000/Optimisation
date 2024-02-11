@@ -3,34 +3,31 @@ import pandas as pd
 import gurobipy as gp
 from gurobipy import GRB
 
-m = gp.Model('Production planning')
-
 def optimise_fun(production_names,distribution_names,cost_data):
     max_prod = pd.Series([180,200], index = production_names, name = "max_production")
     n_demand = pd.Series([89,95], index = distribution_names, name = "demand") 
-    max_prod.to_frame()
-#n_demand.to_frame()
 
     frac = 0.75
 
 # loop through each p and d combination to create a decision variable
-    m = gp.Model('widgets')
+    m = gp.Model('Production planning')
     x={}
     for p in production_names:
         for d in distribution_names:
             x[p,d]=m.addVar(name=p+"_to_"+d)
+    st.dataframe(x)
 
 
 # Provide each set for the indices 
-    m = gp.Model('widgets')
+    m = gp.Model('Production planning')
     x=m.addVars(production_names,distribution_names,name="prod_ship")
 
 # The index of the tranporation costs have each combination of prodiction and distribution location
-    m = gp.Model('widgets')
+    m = gp.Model('Production planning')
     x=m.addVars(cost_data.index,name="prod_ship")
-
-    meet_demand=m.addConstrs((gp.quicksum(x[p,d] for p in production_names) >= n_demand[d] for d in distribution_names),
-                          name="meet_demand")
+    
+    meet_demand=m.addConstrs((gp.quicksum(x[p,d] for p in production_names) >= n_demand[d] for d in distribution_names),name="meet_demand")
+    m.update()
 
 
 

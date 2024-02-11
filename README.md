@@ -1,1 +1,1 @@
-Developing Optimisation using pulp
+Developing Optimisation using Pyomo
